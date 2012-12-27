@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -7,7 +7,7 @@
 	<script src="js/jquery.js" type="text/javascript"></script>
 	<script src="js/scripts.js" type="text/javascript"></script>
 
-	<title>phpMyXBMC</title>
+	<title>SatyaNAS</title>
 </head>
 <body>
 
