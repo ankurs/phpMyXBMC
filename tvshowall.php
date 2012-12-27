@@ -28,6 +28,14 @@
             {
                 $thumbXML = new SimpleXMLElement('<thumbs>'.$movieThumbs.'</thumbs>');
                 $movieThumbs = $thumbXML->thumb[0];
+                foreach($thumbXML->thumb as $thumb)
+                {
+                    if ($thumb['type'] == 'season' && $thumb['season'] == '-1')
+                    {
+                        $movieThumbs = $thumb.'';
+                        break;
+                    }
+                }
             }
             else
             {

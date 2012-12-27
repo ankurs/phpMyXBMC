@@ -36,7 +36,7 @@
 			$movieImdb = $row['c12'];
 
             $rating = $row['c04'] + 0;
-            $year = $row['c05'] + 0;
+            $year = $row['c05'];
             $genre = $row['c08'];
 
             $movieThumbs = $row['c11'];
@@ -60,7 +60,7 @@
 <h5>IMBD Rating: <?php echo $rating; ?></h5>
 <h5>Genre: <?php echo $genre; ?></h5>
 <h5><a href="<?php echo $path; ?>" target='_blank'>Goto Folder</a></h5>
-
+<h5><a target='_blank' href='http://thetvdb.com/?tab=series&id=<?php echo $movieImdb; ?>' >Click for TVDB page</a></h5>
 
 <div id="moviedetails-poster">
 	<img src="<?php echo $movieThumbs; ?>" width='80%'>
