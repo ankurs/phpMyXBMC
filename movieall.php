@@ -9,7 +9,7 @@
 		// This prints out links to all the movies beginning with the first letter of the alphabet
 		$alphabet = range('a', 'z');
 
-		echo '<a href="movieall.php?char=0">#</a>';
+        echo '<a href="movieall.php?char=0">#</a>';
 		foreach($alphabet as $letter) {
 			echo '<a href="movieall.php?char=' . $letter . '">' . strtoupper($letter) . '</a>';
 		}
@@ -27,37 +27,56 @@
 		
 		$sel_char = $_GET['char'];
 
-		// This creates an sql query with the whole alphabet, loops "b-z" and adds "a" before the loop
-		if ($sel_char == '0') {
-			$alphabet = range('a', 'z');
+        if ($sel_char == '0')
+        {
+            $sql = "
+                    SELECT idFile, c00, strPath, playCount, c08
+                    FROM movieview
+                    WHERE ";
+                    foreach($alphabet as $letter)
+                    {
+                        $and = 'and';
+                        if ($letter == 'z')
+                            $and='';
+                        $sql.= " LEFT(c00,1) !='".$letter."' $and
+                            ";
+                    }
+                    $sql.="ORDER BY c00 ASC";
+                 // The database connection
+                $DBH = db_handle();
+                $STH = $DBH->prepare($sql);
+                $STH->execute( );
 
-			$sql = "
-				SELECT idFile, c00, strPath, playCount 
-				FROM movieview 
-				WHERE LEFT(c00,1) != 'a' 
-			";
+        }
+        else
+        {
+            $sql = "
+                    SELECT idFile, c00, strPath, playCount, c08
+                    FROM movieview 
+                    WHERE LEFT(c00,1) = :char 
+                    ORDER BY c00 ASC
+                ";
 
-			for($i = 1, $size = sizeof($alphabet); $i < $size; ++$i) {
-				$sql .= "AND LEFT(c00,1) != '" . $alphabet[$i] .  "' ";
-			}
+            // The database connection
+            $DBH = db_handle();
+            $STH = $DBH->prepare($sql);
+            $STH->execute( array('char' => $sel_char) );
+        }
+    }
+    else
+    {
+         $sql = "
+                    SELECT idFile, c00, strPath, playCount, c08
+                    FROM movieview 
+                    ORDER BY c00 ASC
+                ";
 
-			$sql .= "ORDER BY c00";
-		}
+            // The database connection
+            $DBH = db_handle();
+            $STH = $DBH->prepare($sql);
+            $STH->execute( );
 
-		else {
-			$sql = "
-				SELECT idFile, c00, strPath, playCount 
-				FROM movieview 
-				WHERE LEFT(c00,1) = :char 
-				ORDER BY c00 ASC
-			";
-		}
-
-		// The database connection
-		$DBH = db_handle();
-		$STH = $DBH->prepare($sql);
-		$STH->execute( array('char' => $sel_char) );
-
+    }
 		// Fetches the array of each movie and saves in another array.
 		// An array named $result containing an array for each movie.
 		$result = $STH->fetchAll(PDO::FETCH_ASSOC);
@@ -68,34 +87,33 @@
 			$movieID = $result[$i]["idFile"];
 			$movieHash = get_hash($result[$i]["strPath"]);
 			$movieName = $result[$i]['c00'];
-			$moviePlayed = $result[$i]['playCount'];
+            $moviePlayed = $result[$i]['playCount'];
+            $movieThumbs = $result[$i]['c08'];
+            if (!empty($movieThumbs))
+            {
+                $thumbXML = new SimpleXMLElement('<thumbs>'.$movieThumbs.'</thumbs>');
+                $movieThumbs = $thumbXML->thumb[0];
+            }
+            else
+            {
+                $movieThumbs = "";
+            }
 ?>
 
 <div class="coverframe">
 	
 	<a href="moviedetails.php?id=<?php echo $movieID; ?>">
-		<div class="coverframe-picture" style="background:url(img/Thumbnails/Video/<?php echo substr($movieHash, 0, 1); ?>/<?php echo $movieHash; ?>.tbn) no-repeat center center; background-size:122px auto;">
-			<?php 
-				if ($moviePlayed != null) {
-					echo '<img src="img/watched.png" class="watched-overlay"/>';
-				}
-			?>
-			<img src="img/Thumbnails/Video/<?php echo substr($movieHash, 0, 1); ?>/<?php echo $movieHash; ?>.tbn" class="poster-picture" />
+		<div class="coverframe-picture" style="background:url(<?php echo $movieThumbs; ?>) no-repeat center center; background-size:122px auto;">
 		</div>
 	</a>
 	
 	<div class="coverframe-text">
-		<a href="moviedetails.php?id=' . $movieID . '"><?php echo $movieName; ?></a>
+		<a href="moviedetails.php?id=<?php echo $movieID; ?>"><?php echo $movieName; ?></a>
 	</div>
 
 </div>
 
 <?php
-		}
-	}
-
-	else {
-	}
-
+    }
 	get_footer();
 ?>

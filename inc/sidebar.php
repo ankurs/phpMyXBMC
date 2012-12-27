@@ -2,11 +2,9 @@
 	
 	<div id="nav">
 		<ul>
-			<li>Home</li>
-			<li>Movies</li>
-			<li>TV Shows</li>
-			<li>Stats</li>
-			<li>Settings</li>
+			<li><a href="/" >Home</a></li>
+			<li><a href='movieall.php' >Movies</a></li>
+			<li><a href='tvshowall.php' >TV Shows</a></li>
 		</ul>
 	</div>
 
