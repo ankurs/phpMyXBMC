@@ -94,7 +94,7 @@
             foreach ($result as $row)
             {
                 $path = $row['strPath'];
-                $path = str_replace('nfs://192.168.0.109/c/', 'http://media.satyanas.in/', $path);
+                $path = str_replace('nfs://192.168.0.109/c/', 'http://'.$_SERVER['HTTP_HOST'].'/', $path);
             }
         }
 
@@ -105,13 +105,13 @@
 <h5><?php echo $movieOutline; ?></h5>
 <h5>IMBD Rating: <?php echo $rating; ?></h5>
 <h5>Genre: <?php echo $genre; ?></h5>
-<h5><a href="<?php echo $path.$filename; ?>" target='_blank'>Download File</a></h5>
+<h5><a href="<?php echo $path.$filename; ?>" target='_blank'>Download File</a> (Right Click -> Save Link As..)</h5>
 <h5><a href="<?php echo $path; ?>" target='_blank'>Goto Folder</a></h5>
 <h5><a target='_blank' href='http://www.imdb.com/title/<?php echo $movieImdb; ?>' >Click for IMDB Page</a></h5>
 
 
 <div id="moviedetails-poster">
-	<img src="<?php echo $movieThumbs; ?>" width='80%'>
+	<img src="<?php echo $movieThumbs; ?>" width='80%'><br/>
 </div>
 
 <div id="moviedetails-plot">

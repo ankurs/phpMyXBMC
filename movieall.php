@@ -14,7 +14,7 @@
 			echo '<a href="movieall.php?char=' . $letter . '">' . strtoupper($letter) . '</a>';
 		}
 	?>
-
+<hr/>
 	<div class="clear"></div>
 
 </div>
@@ -81,6 +81,7 @@
 		// An array named $result containing an array for each movie.
 		$result = $STH->fetchAll(PDO::FETCH_ASSOC);
 
+        echo '<center> Found '.count($result).' Movies</center><br/>';
 		// Loops through the array and prints out information for every movie
 		for($i = 0, $size = sizeof($result); $i < $size; ++$i) {
 			

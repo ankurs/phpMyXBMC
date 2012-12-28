@@ -51,7 +51,7 @@
                 $movieThumbs = "";
             }
             $path = $row['c16'];
-            $path = str_replace('nfs://192.168.0.109/c/', 'http://media.satyanas.in/', $path);
+            $path = str_replace('nfs://192.168.0.109/c/', 'http://'.$_SERVER['HTTP_HOST'].'/', $path);
 		}
 	}
 ?>
@@ -63,7 +63,7 @@
 <h5><a target='_blank' href='http://thetvdb.com/?tab=series&id=<?php echo $movieImdb; ?>' >Click for TVDB page</a></h5>
 
 <div id="moviedetails-poster">
-	<img src="<?php echo $movieThumbs; ?>" width='80%'>
+	<img src="<?php echo $movieThumbs; ?>" width='80%'><br/>
 </div>
 
 <div id="moviedetails-plot">

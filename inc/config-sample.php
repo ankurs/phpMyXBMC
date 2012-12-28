@@ -46,4 +46,10 @@
 	//The TV Database API
 	define('TTVDB_API', '');
 
+    //Google Analytics ID
+    define('GOOGLE_ANALYTICS', '');
+
+    // Domain for Google Analytics
+    define('GOOGLE_ANALYTICS_DOMAIN', 'satyanas.in');
+
 ?>
