@@ -13,6 +13,7 @@
 		foreach($alphabet as $letter) {
 			echo '<a href="movieall.php?char=' . $letter . '">' . strtoupper($letter) . '</a>';
 		}
+        echo '<a href="movieall.php?">(All)</a>';
 	?>
 <hr/>
 	<div class="clear"></div>
