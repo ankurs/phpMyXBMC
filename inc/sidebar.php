@@ -7,6 +7,7 @@
             <li><a href='movierecent.php' >Recently Added Movies</a></li>
 			<li><a href='tvshowall.php' >TV Shows</a></li>
             <li><a href='../'>Browse Folders</a></li>
+            <li><a href='updates.php'>SatyaNAS Updates</a></li>
 		</ul>
 	</div>
 
