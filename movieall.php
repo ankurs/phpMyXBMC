@@ -9,11 +9,11 @@
 		// This prints out links to all the movies beginning with the first letter of the alphabet
 		$alphabet = range('a', 'z');
 
+        echo '<a href="movieall.php?">(Show All)</a>';
         echo '<a href="movieall.php?char=0">#</a>';
 		foreach($alphabet as $letter) {
 			echo '<a href="movieall.php?char=' . $letter . '">' . strtoupper($letter) . '</a>';
 		}
-        echo '<a href="movieall.php?">(All)</a>';
 	?>
 <hr/>
 	<div class="clear"></div>

@@ -8,6 +8,12 @@
 			<li><a href='tvshowall.php' >TV Shows</a></li>
             <li><a href='../'>Browse Folders</a></li>
             <li><a href='updates.php'>SatyaNAS Updates</a></li>
+<?php
+        if ($_SERVER["REMOTE_USER"] != 'hakuna')
+        {
+            echo '<li><a href="http://'.$_SERVER['SERVER_NAME'].':8181"/>Torrent Control</a></li>';
+        }
+?>
 		</ul>
 	</div>
 
