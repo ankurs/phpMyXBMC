@@ -1,4 +1,5 @@
 <?php
+$genreInfo = array();
 	// If no id is specified in the url bar -> redirect to movieall.php
 	if ($_GET['id'] == null) {
 		header("Location: movieall.php");
@@ -12,7 +13,26 @@
 		get_header();
 
 		// The database connection and query of movie info
-		$DBH = db_handle(DB_NAME_VIDEO);
+        $DBH = db_handle(DB_NAME_VIDEO);
+
+        // fetch genres
+		$sql = '
+            SELECT genre.idGenre, genre.strGenre
+            FROM  `genre` ,  `genrelinkmovie` 
+            WHERE genre.idGenre = genrelinkmovie.idGenre
+            GROUP BY strGenre, idGenre
+		';
+
+		$STH = $DBH->prepare($sql);
+		$STH->execute();
+
+		$genres = $STH->fetchAll(PDO::FETCH_ASSOC);
+        foreach($genres as $row) {
+            $genreName = $row['strGenre'];
+            $id = $row['idGenre'];
+            $genreInfo[strtolower($genreName)] = $id;
+        }
+        // end fetch genre
 
 		$sql = '
 			SELECT * 
@@ -99,12 +119,23 @@
         }
 
 	}
+
+    $genres = explode("/", $genre);
+    $genre_vals = array();
+    foreach ($genres as $genre)
+    {   
+        $genre = trim($genre);
+        if (isset($genreInfo[strtolower($genre)]))
+        {
+            $genre_vals[] = ' <a href="genreinfo.php?id='.$genreInfo[strtolower($genre)].'&genre='.$genre.'">'.$genre.'</a> ';
+        }
+    }
 ?>
 
 <h1><a target='_blank' href='http://www.imdb.com/title/<?php echo $movieImdb; ?>' ><?php echo $movieTitle; ?></a> (<?php echo $year; ?>)</h1>
 <h5><?php echo $movieOutline; ?></h5>
 <h5>IMBD Rating: <?php echo $rating; ?></h5>
-<h5>Genre: <?php echo $genre; ?></h5>
+<h5>Genre: <?php echo implode("/", $genre_vals); ?></h5>
 <h5><a href="<?php echo $path.$filename; ?>" target='_blank'>Download File</a> (Right Click -> Save Link As..)</h5>
 <h5><a href="<?php echo $path; ?>" target='_blank'>Goto Folder</a></h5>
 <h5><a target='_blank' href='http://www.imdb.com/title/<?php echo $movieImdb; ?>' >Click for IMDB Page</a></h5>

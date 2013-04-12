@@ -16,6 +16,7 @@
                  FROM genrelinkmovie
                  WHERE idGenre = :id
              )
+             Order BY c00 ASC
                 ";
 
             // The database connection
