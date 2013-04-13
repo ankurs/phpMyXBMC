@@ -36,7 +36,7 @@ $genreInfo = array();
 
 		$sql = '
 			SELECT * 
-			FROM movie 
+			FROM movieview
 			WHERE idFile = :id 
 			ORDER BY c00 ASC
 		';
@@ -61,6 +61,11 @@ $genreInfo = array();
             $file = $row['c22'];
 
             $idFile = $row['idFile'];
+            $filename = $row['strFileName'];
+            $path = str_replace('nfs://192.168.0.109/c/', 'http://'.$_SERVER['HTTP_HOST'].'/', $row['strPath']);
+
+            $trailerId = str_replace('plugin://plugin.video.youtube/?action=play_video&videoid=', '', $row['c19']);
+            $trailer = 'http://www.youtube.com/watch?v='.$trailerId;
 
             $movieThumbs = $row['c20'];
             if (!empty($movieThumbs))
@@ -73,57 +78,12 @@ $genreInfo = array();
                 $movieThumbs = "";
             }
 		}
-
-        if (isset($idFile) && !empty($idFile))
-        {
-            $sql = '
-                SELECT * 
-                FROM files
-                WHERE idFile = :id 
-            ';
-
-            $STH = $DBH->prepare($sql);
-            $STH->execute( array(
-                'id' => $_GET['id']
-            ));
-
-            $result = $STH->fetchAll(PDO::FETCH_ASSOC);
-
-            foreach ($result as $row)
-            {
-                $filename = $row['strFilename'];
-                $idPath = $row['idPath'];
-            }
-        }
-
-        if (isset($idPath) && !empty($idPath))
-        {
-            $sql = '
-                SELECT * 
-                FROM path
-                WHERE idPath = :id 
-            ';
-
-            $STH = $DBH->prepare($sql);
-            $STH->execute( array(
-                'id' => $idPath,
-            ));
-
-            $result = $STH->fetchAll(PDO::FETCH_ASSOC);
-
-            foreach ($result as $row)
-            {
-                $path = $row['strPath'];
-                $path = str_replace('nfs://192.168.0.109/c/', 'http://'.$_SERVER['HTTP_HOST'].'/', $path);
-            }
-        }
-
 	}
 
     $genres = explode("/", $genre);
     $genre_vals = array();
     foreach ($genres as $genre)
-    {   
+    {
         $genre = trim($genre);
         if (isset($genreInfo[strtolower($genre)]))
         {
@@ -139,19 +99,21 @@ $genreInfo = array();
 <h5><a href="<?php echo $path.$filename; ?>" target='_blank'>Download File</a> (Right Click -> Save Link As..)</h5>
 <h5><a href="<?php echo $path; ?>" target='_blank'>Goto Folder</a></h5>
 <h5><a target='_blank' href='http://www.imdb.com/title/<?php echo $movieImdb; ?>' >Click for IMDB Page</a></h5>
-
+</h5>
 
 <div id="moviedetails-poster">
-	<img src="<?php echo $movieThumbs; ?>" width='80%'><br/>
+    <center><iframe width="853" height="480" src="http://www.youtube.com/embed/<?php echo $trailerId; ?>" frameborder="0" allowfullscreen></iframe></center>
+	<!--img src="<?php echo $movieThumbs; ?>" width='80%'><br/-->
 </div>
 
-<div id="moviedetails-plot">
+<br/>
 
+<div id="moviedetails-plot">
 	<div class="divider-medium"></div>
 	Movie Plot: <?php echo $moviePlot; ?>
 	<div class="divider-medium"></div>
-	
 </div>
+
 
 <?php
 	get_footer();

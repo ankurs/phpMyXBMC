@@ -17,7 +17,7 @@
 
 		$sql = '
 			SELECT * 
-			FROM tvshow 
+			FROM tvshowview
 			WHERE idShow = :id 
 			ORDER BY c00 ASC
 		';
