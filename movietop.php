@@ -18,9 +18,9 @@
             $offset = 0;
         }
             $sql = "
-                    SELECT idFile, c00, strPath, playCount, c08
+                    SELECT idFile, c00, strPath, playCount, c08, c05
                     FROM movieview 
-                    ORDER BY `idMovie` DESC LIMIT 20 OFFSET :offset
+                    ORDER BY `c05` DESC LIMIT 20 OFFSET :offset
                 ";
 
             // The database connection
@@ -32,7 +32,7 @@
 		// An array named $result containing an array for each movie.
 		$result = $STH->fetchAll(PDO::FETCH_ASSOC);
 
-        echo '<center> Recently Added Movies </center><br/>';
+        echo '<center>Movies By IMDB Rating</center><br/>';
 		// Loops through the array and prints out information for every movie
 		for($i = 0, $size = sizeof($result); $i < $size; ++$i) {
 			
@@ -41,6 +41,7 @@
 			$movieName = $result[$i]['c00'];
             $moviePlayed = $result[$i]['playCount'];
             $movieThumbs = $result[$i]['c08'];
+            $rating = $result[$i]['c05'] + 0;
             if (!empty($movieThumbs))
             {
                 $thumbXML = new SimpleXMLElement('<thumbs>'.$movieThumbs.'</thumbs>');
@@ -60,7 +61,7 @@
 	</a>
 	
 	<div class="coverframe-text">
-		<a href="moviedetails.php?id=<?php echo $movieID; ?>"><?php echo $movieName; ?></a>
+		<a href="moviedetails.php?id=<?php echo $movieID; ?>"><?php echo $movieName.'<br/>IMDB: '.$rating; ?></a>
 	</div>
 
 </div>
@@ -74,16 +75,15 @@
     if ($offset > 0)
     {
         $val = ($offset - 20) > 0 ? ($offset - 20) : 0;
-        $footer_data .= "<a href='movierecent.php?offset=".$val."'>Previous 20</a> | ";
+        $footer_data .="<a href='movietop.php?offset=".$val."'>Previous 20</a> | ";
     }
     if (count($result) > 0)
     {
-        $footer_data .= "<a href='movierecent.php?offset=".($offset+20)."'>Next 20</a>";
+        $footer_data .="<a href='movietop.php?offset=".($offset+20)."'>Next 20</a></center>";
     }
-    $footer_data .="</center>";
+    $footer_data .= "</center>";
 ?>
 <?php
-
 	get_footer($footer_data);
 ?>
 

@@ -22,9 +22,15 @@
 	}
 
 	//	Footer
-	function get_footer() {
+	function get_footer($footer_data = null) {
 		include('footer.php');
 	}
+
+    function get_updates()
+    {
+        include('update.php');
+        return $updates;
+    }
 
 /* ==|== Database ===============================================================================
 	All database related.
