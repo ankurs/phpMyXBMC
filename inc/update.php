@@ -1,7 +1,8 @@
 <?php
 
     $updates = array(
-        "18th April 2013: New -> <a href='moviegenre.php'>Movies by IMDB Rating section</a>",
+        "28th April 2013: New -> <a href='tvrecent.php'>Recently Added TV Episodes section</a>",
+        "18th April 2013: New -> <a href='movietop.php'>Movies by IMDB Rating section</a>",
         "13th April 2013: Movie Trailers instead of Fanart images",
         "13th April 2013: NEW -> <a href='moviegenre.php'>Movies by Genre Section</a>",
         "10th April 2013 (2:30AM): YAY was able to recover all the data from my old drive, SatyaNAS is back :) (PS: LVM with RAID is fun until something goes wrong :p )",

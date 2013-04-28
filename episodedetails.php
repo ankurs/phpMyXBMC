@@ -2,7 +2,7 @@
 <?php
 	// If no id is specified in the url bar -> redirect to movieall.php
 	if ($_GET['id'] == null) {
-		header("Location: movieall.php");
+		header("Location: tvshowall.php");
 		exit;
 	}
 
@@ -16,10 +16,8 @@
 		$DBH = db_handle(DB_NAME_VIDEO);
 
 		$sql = '
-			SELECT * 
-			FROM tvshowview
-			WHERE idShow = :id 
-			ORDER BY c00 ASC
+            SELECT * FROM `episodeview`
+			WHERE idEpisode = :id 
 		';
 
 		$STH = $DBH->prepare($sql);
@@ -33,34 +31,33 @@
 		foreach($result as $row) {
 			$movieTitle = $row['c00'];
 			$moviePlot = $row['c01'];
-			$movieImdb = $row['c12'];
 
-            $rating = $row['c04'] + 0;
+            $rating = $row['c03'] + 0;
             $year = $row['c05'];
-            $genre = $row['c08'];
 
-            $movieThumbs = $row['c11'];
+            $showID = $row['idShow'];
+            $showName = $row['strTitle'];
+
+            $movieThumbs = $row['c06'];
             if (!empty($movieThumbs))
             {
-                $thumbXML = new SimpleXMLElement('<thumb>'.$movieThumbs.'</thumb>');
-                $movieThumbs = $thumbXML->fanart['url'];
-                $movieThumbs .= $thumbXML->fanart->thumb[0];
+                $thumbXML = new SimpleXMLElement('<thumbs>'.$movieThumbs.'</thumbs>');
+                $movieThumbs = $thumbXML->thumb[0];
             }
             else
             {
                 $movieThumbs = "";
             }
-            $path = $row['c16'];
+            $path = $row['c18'];
             $path = str_replace('nfs://192.168.0.109/c/', 'http://'.$_SERVER['HTTP_HOST'].'/', $path);
 		}
 	}
 ?>
 
-<h1><a target='_blank' href='http://thetvdb.com/?tab=series&id=<?php echo $movieImdb; ?>' ><?php echo $movieTitle; ?></a> (<?php echo $year; ?>)</h1>
+<h1><?php echo $movieTitle; ?> (<?php echo $year; ?>)</h1>
+<h3> TV Series: <a href='tvshowdetails.php?id=<?php echo $showID; ?>'><?php echo $showName; ?></a></h3>
 <h5>IMBD Rating: <?php echo $rating; ?></h5>
-<h5>Genre: <?php echo $genre; ?></h5>
-<h5><a href="<?php echo $path; ?>" target='_blank'>Goto Folder</a></h5>
-<h5><a target='_blank' href='http://thetvdb.com/?tab=series&id=<?php echo $movieImdb; ?>' >Click for TVDB page</a></h5>
+<h5><a href="<?php echo $path; ?>" target='_blank'>Download Episode (Right click -> Save link as..)</a></h5>
 
 <div id="moviedetails-poster">
 	<img src="<?php echo $movieThumbs; ?>" width='80%'><br/>
@@ -69,7 +66,7 @@
 <div id="moviedetails-plot">
 
 	<div class="divider-medium"></div>
-	Series Plot: <?php echo $moviePlot; ?>
+	Episode Info: <?php echo $moviePlot; ?>
 	<div class="divider-medium"></div>
 	
 </div>
