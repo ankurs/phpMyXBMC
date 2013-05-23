@@ -1,5 +1,5 @@
 <div id="sidebar">
-	
+
 	<div id="nav">
 		<ul>
 			<li><a href="/" >Home</a></li>
@@ -10,6 +10,7 @@
 			<li><a href='tvshowall.php' >TV Shows</a></li>
 			<li><a href='tvrecent.php' >Recently Added TV Episodes</a></li>
             <li><a href='ftp://<?php echo $_SERVER['SERVER_NAME'];?>:2112/media/'>Browse Folders</a></li>
+            <li><a href='http://<?php echo $_SERVER['SERVER_NAME'];?>:8001/mpd.ogg'>Streaming Music Service</a></li>
             <li><a href='updates.php'>SatyaNAS Updates</a></li>
 <?php
         if ($_SERVER["REMOTE_USER"] != 'hakuna')

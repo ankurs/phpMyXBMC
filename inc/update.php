@@ -1,6 +1,7 @@
 <?php
-
+$host = $_SERVER['SERVER_NAME'];
     $updates = array(
+        "23rd May 2013: New -><a href='http://{$host}:8001/mpd.ogg'>Streaming Music Service</a>",
         "28th April 2013: New -> <a href='tvrecent.php'>Recently Added TV Episodes section</a>",
         "18th April 2013: New -> <a href='movietop.php'>Movies by IMDB Rating section</a>",
         "13th April 2013: Movie Trailers instead of Fanart images",
