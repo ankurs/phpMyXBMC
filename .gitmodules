@@ -1,0 +1,3 @@
+[submodule "mvc"]
+	path = mvc
+	url = git@github.com:ankurs/mvc-php.git
