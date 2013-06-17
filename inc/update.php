@@ -1,6 +1,11 @@
 <?php
 $host = $_SERVER['SERVER_NAME'];
-    $updates = array(
+$updates = array(
+        "4th June 2013 11:00pm : FINISHED volume expansion from 2TB to 3TB complete, we now have 3TB RAID 1 volumes this should result in better read performance",
+        "4th June 2013 11:00pm : STARTED volume expansion from 2TB to 3TB SatyaNAS might be down for 5 mins",
+        "4th June 2013 11:00pm : FINISHED making SatyaNAS data redundant (RAID 1) copy to secondary HDD",
+        "4th June 2013 5:30pm : STARTED making SatyaNAS data redundant (RAID 1) copy to secondary HDD",
+        "26th May 2013: Rescan of TV Shows for better automated way of managing TV Shows and Rearranged Music section",
         "23rd May 2013: New -><a href='http://{$host}:8001/mpd.ogg'>Streaming Music Service</a>",
         "28th April 2013: New -> <a href='tvrecent.php'>Recently Added TV Episodes section</a>",
         "18th April 2013: New -> <a href='movietop.php'>Movies by IMDB Rating section</a>",
