@@ -2,10 +2,10 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link href="styles/main.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo getURL();?>styles/main.css" rel="stylesheet" type="text/css" />
 
-	<script src="js/jquery.js" type="text/javascript"></script>
-	<script src="js/scripts.js" type="text/javascript"></script>
+<script src="<?php echo getURL();?>js/jquery.js" type="text/javascript"></script>
+	<script src="<?php echo getURL();?>js/scripts.js" type="text/javascript"></script>
 
 	<title>SatyaNAS</title>
 </head>

@@ -1,8 +1,11 @@
 RewriteEngine On
-#RewriteBase /path/
+RewriteBase /media/XBMC/public/
 
 # rewrite all request to .php files to controller
 RewriteCond %(REQUEST_FILENAME} !-f
+RewriteRule ^js/(.*)$ js/$1 [QSA,L]
+RewriteRule ^img/(.*)$ img/$1 [QSA,L]
+RewriteRule ^styles/(.*)$ styles/$1 [QSA,L]
 RewriteRule ^(.*?)/(.*?)/(.*)$ controller.php?_controller=$1&_action=$2&_params=$3 [QSA,L]
 RewriteRule ^(.*)/(.*)$ controller.php?_controller=$1&_action=$2 [QSA,L]
 RewriteRule ^(.*)$ controller.php?_controller=$1 [QSA,L]

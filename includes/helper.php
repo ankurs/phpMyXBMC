@@ -85,4 +85,26 @@ function addDefine($key, $value)
     }
 }
 
+function getURL($controller=null, $action=null, $params=null)
+{
+    if (!is_array($params) && !is_null($params))
+    {
+        $params = array($params);
+    }
+    $url = MVC_APP_URL;
+    if (!is_null($controller) && is_string($controller))
+    {
+        $url .= $controller.'/';
+        if (!is_null($action) && is_string($action))
+        {
+            $url .= $action.'/';
+            if (is_array($params))
+            {
+                $url .= implode('/', $params);
+            }
+        }
+    }
+    return $url;
+}
+
 ?>
