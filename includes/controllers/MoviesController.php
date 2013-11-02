@@ -249,7 +249,7 @@ class MoviesController
             }
             else
             {
-                header("Location: ".getURL('movies'));
+                $this->detailsAction($params);
                 return;
             }
             // The database connection and query of movie info
@@ -405,7 +405,7 @@ class MoviesController
         }
         else
         {
-            header("Location: ".getURL('movies', 'genre'));
+            $this->genreAction($params);
             return;
         }
         $genre = null;

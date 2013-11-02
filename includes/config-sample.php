@@ -75,7 +75,7 @@ require_once("helper.php");
     addDefine('DEBUG_HTML', 'html');
 
     //control debug
-    addDefine('DEBUG_ENABLED',true);
+    addDefine('DEBUG_ENABLED',false);
     addDefine('DEBUG_LEVEL', DEBUG_MAIN);
     addDefine('DEBUG_FUNCTION', DEBUG_LOG); 
 
