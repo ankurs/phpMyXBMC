@@ -107,4 +107,9 @@ function getURL($controller=null, $action=null, $params=null)
     return $url;
 }
 
+function getPATH($path)
+{
+    return str_replace('nfs://192.168.0.109/c/', 'http://'.$_SERVER['HTTP_HOST'].'/', $path);
+}
+
 ?>
