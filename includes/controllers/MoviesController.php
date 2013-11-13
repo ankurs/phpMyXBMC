@@ -159,7 +159,7 @@ class MoviesController
         $sql = "
                 SELECT idFile, c00, strPath, playCount, c08
                 FROM movieview 
-                ORDER BY `idMovie` DESC LIMIT 20 OFFSET :offset
+                ORDER BY `dateAdded` DESC LIMIT 20 OFFSET :offset
             ";
 
         // The database connection
@@ -249,7 +249,7 @@ class MoviesController
             }
             else
             {
-                $this->detailsAction($params);
+                $this->defaultAction($params);
                 return;
             }
             // The database connection and query of movie info
