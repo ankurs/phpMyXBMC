@@ -53,17 +53,19 @@ class MoviesController
         {
             $sel_char = $params[0];
         }
+        $the_with_char = "The ".$sel_char;
         $sql = "
                 SELECT idFile, c00, strPath, playCount, c08
                 FROM movieview 
                 WHERE LEFT(c00,1) = :char 
+                OR LEFT(c00,5) = :thechar
                 ORDER BY c00 ASC
             ";
 
         // The database connection
         $DBH = db_handle();
         $STH = $DBH->prepare($sql);
-        $STH->execute( array('char' => $sel_char) );
+        $STH->execute( array('char' => $sel_char, 'thechar' => $the_with_char) );
         $this->renderMovie($STH);
     }
 
