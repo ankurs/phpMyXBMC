@@ -28,7 +28,7 @@ class IndexController
             echo "<h4>$updates[0]</h4>";
         ?>
 
-        <h4>Powered By: <a href='http://xbmc.org'>XBMC</a> and <a href='http://github.com/ankurs/phpMyXBMC'>phpMyXBMC</a></h4>
+        <h4>Powered By: <a href='http://xbmc.org'>XBMC</a> and <a href='http://github.com/ankurs/phpMyXBMC'>phpMyXBMC</a> -- Please Submit Bugs/Requests <a href='https://github.com/ankurs/phpMyXBMC/issues'>here</a></h4>
 
         <?php
         get_footer();

@@ -13,7 +13,7 @@ class MoviesController
         $alphabet = range('a', 'z');
         $sql = "
                 SELECT idFile, c00, strPath, playCount, c08
-                FROM movieview
+                FROM movie_view
                 WHERE ";
                 foreach($alphabet as $letter)
                 {
@@ -35,7 +35,7 @@ class MoviesController
     {
         $sql = "
                 SELECT idFile, c00, strPath, playCount, c08
-                FROM movieview 
+                FROM movie_view 
                 ORDER BY c00 ASC
             ";
 
@@ -56,7 +56,7 @@ class MoviesController
         $the_with_char = "The ".$sel_char;
         $sql = "
                 SELECT idFile, c00, strPath, playCount, c08
-                FROM movieview 
+                FROM movie_view 
                 WHERE LEFT(c00,1) = :char 
                 OR LEFT(c00,5) = :thechar
                 ORDER BY c00 ASC
@@ -140,7 +140,7 @@ class MoviesController
         }
         $sql = "
                 SELECT idFile, c00, strPath, playCount, c08, c05
-                FROM movieview 
+                FROM movie_view 
                 ORDER BY `c05` DESC LIMIT 20 OFFSET :offset
             ";
 
@@ -160,7 +160,7 @@ class MoviesController
         }
         $sql = "
                 SELECT idFile, c00, strPath, playCount, c08
-                FROM movieview 
+                FROM movie_view 
                 ORDER BY `dateAdded` DESC LIMIT 20 OFFSET :offset
             ";
 
@@ -259,10 +259,10 @@ class MoviesController
 
             // fetch genres
             $sql = '
-                SELECT genre.idGenre, genre.strGenre
-                FROM  `genre` ,  `genrelinkmovie` 
-                WHERE genre.idGenre = genrelinkmovie.idGenre
-                GROUP BY strGenre, idGenre
+                SELECT genre.genre_id, genre.name
+                FROM  `genre` ,  `genre_link` 
+                WHERE genre.genre_id = genre_link.genre_id
+                GROUP BY name, genre_id
             ';
 
             $STH = $DBH->prepare($sql);
@@ -270,15 +270,15 @@ class MoviesController
 
             $genres = $STH->fetchAll(PDO::FETCH_ASSOC);
             foreach($genres as $row) {
-                $genreName = $row['strGenre'];
-                $id = $row['idGenre'];
+                $genreName = $row['name'];
+                $id = $row['genre_id'];
                 $genreInfo[strtolower($genreName)] = $id;
             }
             // end fetch genre
 
             $sql = '
                 SELECT * 
-                FROM movieview
+                FROM movie_view
                 WHERE idFile = :id 
                 ORDER BY c00 ASC
             ';
@@ -375,10 +375,10 @@ class MoviesController
         $DBH = db_handle(DB_NAME_VIDEO);
 
         $sql = '
-            SELECT genre.idGenre, genre.strGenre
-            FROM  `genre` ,  `genrelinkmovie` 
-            WHERE genre.idGenre = genrelinkmovie.idGenre
-            GROUP BY strGenre, idGenre
+            SELECT genre.genre_id, genre.name
+            FROM  `genre` ,  `genre_link` 
+            WHERE genre.genre_id = genre_link.genre_id
+            GROUP BY name, genre_id
         ';
 
         $STH = $DBH->prepare($sql);
@@ -390,8 +390,8 @@ class MoviesController
         <?php
             // Save all the important information in variables for use later in the HTML code
             foreach($result as $row) {
-                $genre = $row['strGenre'];
-                $id = $row['idGenre'];
+                $genre = $row['name'];
+                $id = $row['genre_id'];
             ?>
             <h4><a href='<?php echo getURL('movies', 'genreInfo', array($id, $genre) )."'/>".$genre; ?></a></h5>
             <?php
@@ -417,13 +417,12 @@ class MoviesController
         }
         $sql = "
             SELECT idFile, c00, strPath, playCount, c08
-            FROM movieview
+            FROM movie_view
             WHERE idMovie
             IN (
-
-             SELECT idMovie
-             FROM genrelinkmovie
-             WHERE idGenre = :id
+             SELECT media_id
+             FROM genre_link
+             WHERE genre_id = :id
             )
             Order BY c00 ASC
         ";

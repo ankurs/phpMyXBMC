@@ -66,7 +66,7 @@ class TvshowsController
 
 		$sql = '
 			SELECT * 
-			FROM tvshowview
+			FROM tvshow_view
 			WHERE idShow = :id 
 			ORDER BY c00 ASC
 		';
@@ -113,7 +113,7 @@ class TvshowsController
         <h1><a target='_blank' href='http://thetvdb.com/?tab=series&id=<?php echo $movieImdb; ?>' ><?php echo $movieTitle; ?></a> (<?php echo $year; ?>)</h1>
         <h5>IMBD Rating: <?php echo $rating; ?></h5>
         <h5>Genre: <?php echo $genre; ?></h5>
-        <h5><a href="<?php echo $path; ?>" target='_blank'>Goto Folder</a></h5>
+        <h5><a href='<?php echo $path; ?>' target='_blank'>Goto Folder</a></h5>
         <h5><a target='_blank' href='http://thetvdb.com/?tab=series&id=<?php echo $movieImdb; ?>' >Click for TVDB page</a></h5>
 
         <div id="moviedetails-poster">
@@ -139,7 +139,7 @@ class TvshowsController
             $offset = $params[0];
         }
         $sql = "
-            SELECT * FROM `episodeview`
+            SELECT * FROM `episode_view`
             ORDER BY `dateAdded` DESC LIMIT 20 OFFSET :offset
         ";
 
@@ -225,7 +225,7 @@ class TvshowsController
 		$DBH = db_handle(DB_NAME_VIDEO);
 
 		$sql = '
-            SELECT * FROM `episodeview`
+            SELECT * FROM `episode_view`
 			WHERE idEpisode = :id 
 		';
 
