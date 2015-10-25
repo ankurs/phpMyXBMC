@@ -105,7 +105,7 @@ class TvshowsController
             {
                 $movieThumbs = "";
             }
-            $path = $row['c16'];
+            $path = $row['strPath'];
             $path = getPATH($path);
 		}
         ?>
